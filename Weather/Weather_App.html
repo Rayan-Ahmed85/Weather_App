@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<input type="text" id="Name" placeholder="Enter Your City">
+<button id="Weather">Check Weather</button>
+
+    <script>
+        document.getElementById("Weather").addEventListener('click',function(){
+            let city = document.getElementById('Name').value;
+
+            fetch('http://api.weatherapi.com/v1/current.json?key=d84cc91e7ed746258ef125537252304&q='+city)
+            .then(function(response){
+                return response.json();
+            })
+            .then(function(data){
+                console.log(data.location.name);
+                console.log(data.location.region);
+                console.log(data.location.country);
+                console.log(data.current.temp_c);
+                console.log(data.current.condition.text);
+                console.log(data.current.condition.icon);
+            })
+            .catch()
+        })
+    </script>
+</body>
+</html>

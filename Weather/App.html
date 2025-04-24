@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🌤️ Weather Finder</h1>
+  <form id="weatherForm">
+    <input type="text" id="locationInput" placeholder="Enter location..." required>
+    <button type="submit">Get Weather</button>
+  </form>
+
+  <div id="weatherResult"></div>
+
+  <script>
+    const apiKey = "d84cc91e7ed746258ef125537252304";
+    const form = document.getElementById("weatherForm");
+    const locationInput = document.getElementById("locationInput");
+    const weatherResult = document.getElementById("weatherResult");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const location = locationInput.value;
+
+      try {
+        const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`);
+        const data = await response.json();
+
+        if (data.error) {
+          weatherResult.innerHTML = `<p>❌ ${data.error.message}</p>`;
+        } else {
+          const { temp_c, condition } = data.current;
+          weatherResult.innerHTML = `
+            <p><strong>Location:</strong> ${data.location.name}, ${data.location.country}</p>
+            <p><strong>Temperature:</strong> ${temp_c} °C</p>
+            <p><strong>Condition:</strong> ${condition.text}</p>
+          `;
+        }
+      } catch (error) {
+        weatherResult.innerHTML = `<p>❌ Failed to fetch weather data.</p>`;
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
