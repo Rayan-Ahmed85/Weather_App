@@ -37,6 +37,7 @@
             <p><strong>Location:</strong> ${data.location.name}, ${data.location.country}</p>
             <p><strong>Temperature:</strong> ${temp_c} °C</p>
             <p><strong>Condition:</strong> ${condition.text}</p>
+             <img src="https:${condition.icon}" alt="${condition.text}">
           `;
         }
       } catch (error) {
